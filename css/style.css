@@ -1,0 +1,486 @@
+/* aceOS Main Stylesheet */
+:root {
+    --primary-color: #00ff9d;
+    --secondary-color: #00d4ff;
+    --background-dark: #0a0a0f;
+    --background-medium: #1a1a2e;
+    --background-light: #2a2a3e;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --accent-glow: rgba(0, 255, 157, 0.3);
+    --shadow-deep: 0 10px 40px rgba(0, 0, 0, 0.5);
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background-dark);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Boot Screen */
+.boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
+
+.boot-screen.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.boot-content {
+    text-align: center;
+}
+
+.logo-3d {
+    perspective: 1000px;
+    margin-bottom: 3rem;
+}
+
+.ace-logo {
+    font-size: 6rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px var(--accent-glow);
+    animation: float 3s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    margin-top: 1rem;
+}
+
+.boot-progress {
+    margin-top: 2rem;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--background-medium);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    animation: progress 2s ease-in-out forwards;
+}
+
+.boot-status {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotateX(0deg); }
+    50% { transform: translateY(-20px) rotateX(5deg); }
+}
+
+@keyframes progress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* Desktop Environment */
+.desktop {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.desktop.active {
+    opacity: 1;
+}
+
+/* Taskbar */
+.taskbar {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    border-top: 1px solid rgba(0, 255, 157, 0.2);
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.taskbar-left, .taskbar-center, .taskbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.start-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: var(--background-dark);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.quick-access {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.quick-btn {
+    background: var(--background-light);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all var(--transition-speed);
+}
+
+.quick-btn:hover {
+    background: var(--background-medium);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: scale(1.1);
+}
+
+.system-tray {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tray-icon {
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform var(--transition-speed);
+}
+
+.tray-icon:hover {
+    transform: scale(1.2);
+}
+
+#time-display {
+    font-family: 'Courier New', monospace;
+    color: var(--primary-color);
+    font-weight: 700;
+    min-width: 60px;
+}
+
+/* Start Menu */
+.start-menu {
+    position: absolute;
+    bottom: 60px;
+    left: 1rem;
+    width: 400px;
+    max-height: 600px;
+    background: rgba(26, 26, 46, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-deep);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all var(--transition-speed);
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.start-menu.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.start-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+    background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 212, 255, 0.1));
+}
+
+.start-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.start-header p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.start-apps {
+    padding: 1rem;
+}
+
+.app-category {
+    margin-bottom: 1.5rem;
+}
+
+.app-category h3 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.app-launcher {
+    width: 100%;
+    background: var(--background-light);
+    border: 1px solid transparent;
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    transition: all var(--transition-speed);
+    color: var(--text-primary);
+}
+
+.app-launcher:hover {
+    background: var(--background-medium);
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.app-launcher .icon {
+    font-size: 2rem;
+}
+
+.app-info {
+    text-align: left;
+}
+
+.app-info strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.app-info small {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Window Container */
+.window-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Desktop Icons */
+.desktop-icons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.desktop-icon {
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform var(--transition-speed);
+}
+
+.desktop-icon:hover {
+    transform: scale(1.1);
+}
+
+.desktop-icon .icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.desktop-icon .label {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Window Styles */
+.window {
+    position: absolute;
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-deep);
+    min-width: 400px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all var(--transition-speed);
+}
+
+.window.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 100;
+}
+
+.window.maximized {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 48px) !important;
+    border-radius: 0;
+}
+
+.window-titlebar {
+    background: var(--background-medium);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+    cursor: move;
+    user-select: none;
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.window-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.window-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all var(--transition-speed);
+}
+
+.window-btn.minimize {
+    background: #ffc107;
+}
+
+.window-btn.maximize {
+    background: #4caf50;
+}
+
+.window-btn.close {
+    background: #f44336;
+}
+
+.window-btn:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.window-content {
+    flex: 1;
+    overflow: auto;
+    padding: 1rem;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .start-menu {
+        width: calc(100% - 2rem);
+    }
+    
+    .desktop-icons {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .window {
+        min-width: 300px;
+    }
+}
