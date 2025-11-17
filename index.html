@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aceOS - Anonymous Virtual Operating System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+</head>
+<body>
+    <!-- Boot Screen -->
+    <div id="boot-screen" class="boot-screen active">
+        <div class="boot-content">
+            <div class="logo-3d">
+                <h1 class="ace-logo">aceOS</h1>
+                <p class="tagline">Anonymous. Secure. Untraceable.</p>
+            </div>
+            <div class="boot-progress">
+                <div class="progress-bar"></div>
+                <p class="boot-status">Initializing secure environment...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Desktop Environment -->
+    <div id="desktop" class="desktop">
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="taskbar-left">
+                <button class="start-button" id="start-btn">
+                    <span class="icon">⚡</span>
+                    <span>aceOS</span>
+                </button>
+                <div class="taskbar-apps" id="taskbar-apps"></div>
+            </div>
+            <div class="taskbar-center">
+                <div class="quick-access">
+                    <button class="quick-btn" data-app="webTrap" title="webTrap Browser">
+                        <span class="icon">🌐</span>
+                    </button>
+                    <button class="quick-btn" data-app="makeTrap" title="makeTrap Editor">
+                        <span class="icon">✏️</span>
+                    </button>
+                    <button class="quick-btn" data-app="chatTrap" title="chatTrap Messaging">
+                        <span class="icon">💬</span>
+                    </button>
+                    <button class="quick-btn" data-app="mailTrap" title="mailTrap Email">
+                        <span class="icon">📧</span>
+                    </button>
+                </div>
+            </div>
+            <div class="taskbar-right">
+                <div class="system-tray">
+                    <span class="tray-icon" id="encryption-status" title="Encryption Active">🔒</span>
+                    <span class="tray-icon" id="network-status" title="Anonymous Network">🛡️</span>
+                    <span class="tray-icon" id="time-display">00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Menu -->
+        <div class="start-menu" id="start-menu">
+            <div class="start-header">
+                <h2>aceOS</h2>
+                <p>Clean Session - No Login Required</p>
+            </div>
+            <div class="start-apps">
+                <div class="app-category">
+                    <h3>Core Applications</h3>
+                    <button class="app-launcher" data-app="webTrap">
+                        <span class="icon">🌐</span>
+                        <div class="app-info">
+                            <strong>webTrap</strong>
+                            <small>Secure Browser</small>
+                        </div>
+                    </button>
+                    <button class="app-launcher" data-app="makeTrap">
+                        <span class="icon">✏️</span>
+                        <div class="app-info">
+                            <strong>makeTrap</strong>
+                            <small>WYSIWYG Editor</small>
+                        </div>
+                    </button>
+                </div>
+                <div class="app-category">
+                    <h3>Communication</h3>
+                    <button class="app-launcher" data-app="chatTrap">
+                        <span class="icon">💬</span>
+                        <div class="app-info">
+                            <strong>chatTrap</strong>
+                            <small>Secure Messaging</small>
+                        </div>
+                    </button>
+                    <button class="app-launcher" data-app="mailTrap">
+                        <span class="icon">📧</span>
+                        <div class="app-info">
+                            <strong>mailTrap</strong>
+                            <small>Encrypted Email</small>
+                        </div>
+                    </button>
+                </div>
+                <div class="app-category">
+                    <h3>Utilities</h3>
+                    <button class="app-launcher" data-app="bankTrap">
+                        <span class="icon">💰</span>
+                        <div class="app-info">
+                            <strong>bankTrap</strong>
+                            <small>Financial Tools</small>
+                        </div>
+                    </button>
+                    <button class="app-launcher" data-app="crapTrap">
+                        <span class="icon">🔧</span>
+                        <div class="app-info">
+                            <strong>crapTrap</strong>
+                            <small>System Utilities</small>
+                        </div>
+                    </button>
+                </div>
+                <div class="app-category">
+                    <h3>System</h3>
+                    <button class="app-launcher" data-app="settings">
+                        <span class="icon">⚙️</span>
+                        <div class="app-info">
+                            <strong>Settings</strong>
+                            <small>System Configuration</small>
+                        </div>
+                    </button>
+                    <button class="app-launcher" data-app="help">
+                        <span class="icon">❓</span>
+                        <div class="app-info">
+                            <strong>Help & Tutorials</strong>
+                            <small>Documentation</small>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Window Container -->
+        <div class="window-container" id="window-container"></div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" data-app="webTrap">
+                <span class="icon">🌐</span>
+                <span class="label">webTrap</span>
+            </div>
+            <div class="desktop-icon" data-app="makeTrap">
+                <span class="icon">✏️</span>
+                <span class="label">makeTrap</span>
+            </div>
+            <div class="desktop-icon" data-app="help">
+                <span class="icon">❓</span>
+                <span class="label">Help</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/core/crypto.js"></script>
+    <script src="js/core/storage.js"></script>
+    <script src="js/core/system.js"></script>
+    <script src="js/ui/window-manager.js"></script>
+    <script src="js/ui/desktop.js"></script>
+    <script src="js/apps/webTrap.js"></script>
+    <script src="js/apps/makeTrap.js"></script>
+    <script src="js/apps/chatTrap.js"></script>
+    <script src="js/apps/mailTrap.js"></script>
+    <script src="js/apps/bankTrap.js"></script>
+    <script src="js/apps/crapTrap.js"></script>
+    <script src="js/apps/settings.js"></script>
+    <script src="js/apps/help.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

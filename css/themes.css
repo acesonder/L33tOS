@@ -1,0 +1,24 @@
+/* aceOS Theme System */
+
+/* Theme Variables */
+.theme-default {
+    --primary-color: #00ff9d;
+    --secondary-color: #00d4ff;
+}
+
+.theme-dark {
+    --primary-color: #9d00ff;
+    --secondary-color: #ff00d4;
+}
+
+.theme-blue {
+    --primary-color: #0099ff;
+    --secondary-color: #00ffff;
+}
+
+.theme-red {
+    --primary-color: #ff0066;
+    --secondary-color: #ff6600;
+}
+
+/* Additional theme styles can be added here */
