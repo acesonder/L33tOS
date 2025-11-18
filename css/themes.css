@@ -1,6 +1,6 @@
-/* aceOS Theme System */
+/* aceOS Theme System - 50 Unique Themes */
 
-/* Theme Variables */
+/* Original Themes (1-4) */
 .theme-default {
     --primary-color: #00ff9d;
     --secondary-color: #00d4ff;
@@ -21,4 +21,240 @@
     --secondary-color: #ff6600;
 }
 
-/* Additional theme styles can be added here */
+/* Neon Themes (5-10) */
+.theme-neon-pink {
+    --primary-color: #ff006e;
+    --secondary-color: #fb5607;
+}
+
+.theme-neon-green {
+    --primary-color: #06ffa5;
+    --secondary-color: #fffb00;
+}
+
+.theme-neon-orange {
+    --primary-color: #ff9e00;
+    --secondary-color: #ff006e;
+}
+
+.theme-neon-purple {
+    --primary-color: #b537f2;
+    --secondary-color: #e500ff;
+}
+
+.theme-neon-blue {
+    --primary-color: #00d9ff;
+    --secondary-color: #0066ff;
+}
+
+.theme-neon-yellow {
+    --primary-color: #ffea00;
+    --secondary-color: #ff6d00;
+}
+
+/* Pastel Themes (11-16) */
+.theme-pastel-mint {
+    --primary-color: #98d8c8;
+    --secondary-color: #6bcaba;
+}
+
+.theme-pastel-lavender {
+    --primary-color: #c8b6e2;
+    --secondary-color: #a594d4;
+}
+
+.theme-pastel-peach {
+    --primary-color: #ffcdb2;
+    --secondary-color: #ffb4a2;
+}
+
+.theme-pastel-sky {
+    --primary-color: #a8dadc;
+    --secondary-color: #6db4d6;
+}
+
+.theme-pastel-rose {
+    --primary-color: #f7b5ca;
+    --secondary-color: #ef9cbd;
+}
+
+.theme-pastel-lemon {
+    --primary-color: #fff3b0;
+    --secondary-color: #ffe066;
+}
+
+/* Dark Themes (17-22) */
+.theme-midnight {
+    --primary-color: #4a5899;
+    --secondary-color: #2d3561;
+}
+
+.theme-charcoal {
+    --primary-color: #6c757d;
+    --secondary-color: #495057;
+}
+
+.theme-obsidian {
+    --primary-color: #1e1e2e;
+    --secondary-color: #2a2a3e;
+}
+
+.theme-noir {
+    --primary-color: #000000;
+    --secondary-color: #1a1a1a;
+}
+
+.theme-deep-purple {
+    --primary-color: #4a148c;
+    --secondary-color: #6a1b9a;
+}
+
+.theme-deep-blue {
+    --primary-color: #01579b;
+    --secondary-color: #0277bd;
+}
+
+/* Nature Themes (23-28) */
+.theme-forest {
+    --primary-color: #2d6a4f;
+    --secondary-color: #52b788;
+}
+
+.theme-ocean {
+    --primary-color: #006494;
+    --secondary-color: #0582ca;
+}
+
+.theme-sunset {
+    --primary-color: #ff6b35;
+    --secondary-color: #f7931e;
+}
+
+.theme-aurora {
+    --primary-color: #4ecdc4;
+    --secondary-color: #44a08d;
+}
+
+.theme-desert {
+    --primary-color: #c9a227;
+    --secondary-color: #d4af37;
+}
+
+.theme-garden {
+    --primary-color: #76c893;
+    --secondary-color: #52b69a;
+}
+
+/* Professional Themes (29-34) */
+.theme-corporate {
+    --primary-color: #003d5b;
+    --secondary-color: #00609c;
+}
+
+.theme-slate {
+    --primary-color: #64748b;
+    --secondary-color: #475569;
+}
+
+.theme-steel {
+    --primary-color: #607d8b;
+    --secondary-color: #455a64;
+}
+
+.theme-silver {
+    --primary-color: #b0bec5;
+    --secondary-color: #90a4ae;
+}
+
+.theme-platinum {
+    --primary-color: #e5e4e2;
+    --secondary-color: #c0c0c0;
+}
+
+.theme-executive {
+    --primary-color: #1a1a2e;
+    --secondary-color: #16213e;
+}
+
+/* Gaming Themes (35-40) */
+.theme-cyber {
+    --primary-color: #00fff5;
+    --secondary-color: #ff00aa;
+}
+
+.theme-matrix {
+    --primary-color: #00ff41;
+    --secondary-color: #008f11;
+}
+
+.theme-arcade {
+    --primary-color: #ff0080;
+    --secondary-color: #ff8c00;
+}
+
+.theme-retro {
+    --primary-color: #e63946;
+    --secondary-color: #f1faee;
+}
+
+.theme-synthwave {
+    --primary-color: #ff00ff;
+    --secondary-color: #00ffff;
+}
+
+.theme-vaporwave {
+    --primary-color: #ff71ce;
+    --secondary-color: #01cdfe;
+}
+
+/* Vibrant Themes (41-46) */
+.theme-tropical {
+    --primary-color: #ff006e;
+    --secondary-color: #ffbe0b;
+}
+
+.theme-candy {
+    --primary-color: #ff4d6d;
+    --secondary-color: #ffafcc;
+}
+
+.theme-rainbow {
+    --primary-color: #ff0080;
+    --secondary-color: #00ffff;
+}
+
+.theme-electric {
+    --primary-color: #7209b7;
+    --secondary-color: #f72585;
+}
+
+.theme-flame {
+    --primary-color: #d00000;
+    --secondary-color: #ff5400;
+}
+
+.theme-cosmic {
+    --primary-color: #560bad;
+    --secondary-color: #b5179e;
+}
+
+/* Light Themes (47-50) */
+.theme-pearl {
+    --primary-color: #f8f9fa;
+    --secondary-color: #e9ecef;
+}
+
+.theme-cream {
+    --primary-color: #fef9ef;
+    --secondary-color: #f4e8d0;
+}
+
+.theme-cotton {
+    --primary-color: #f0f4f8;
+    --secondary-color: #d9e2ec;
+}
+
+.theme-snow {
+    --primary-color: #ffffff;
+    --secondary-color: #f5f5f5;
+}
