@@ -117,11 +117,54 @@ const webTrap = {
             'aceos://settings': this.getSettingsPage()
         };
 
+        // Check if it's a published site URL
+        if (url.startsWith('aceos://sites/')) {
+            return this.getPublishedSiteContent(url);
+        }
+
         return pages[url] || `
             <div style="text-align: center; padding: 3rem;">
                 <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Page Not Found</h2>
                 <p style="color: var(--text-secondary);">The aceOS URL "${url}" does not exist.</p>
                 <p style="margin-top: 1rem;"><a href="#" onclick="webTrap.navigateTo('aceos://welcome'); return false;" style="color: var(--secondary-color);">Return to Welcome</a></p>
+            </div>
+        `;
+    },
+
+    // Get published site content
+    getPublishedSiteContent(url) {
+        const publishedSites = AceStorage.load('makeTrap_published') || [];
+        const site = publishedSites.find(s => s.url === url);
+        
+        if (!site) {
+            return `
+                <div style="text-align: center; padding: 3rem;">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Site Not Found</h2>
+                    <p style="color: var(--text-secondary);">This site is no longer available.</p>
+                    <p style="margin-top: 1rem;"><a href="#" onclick="webTrap.navigateTo('aceos://directory'); return false;" style="color: var(--secondary-color);">Return to Directory</a></p>
+                </div>
+            `;
+        }
+
+        // Increment view count
+        site.views++;
+        AceStorage.save('makeTrap_published', publishedSites);
+
+        // Return the site HTML wrapped in an iframe-like container
+        return `
+            <div style="background: white; min-height: 100%; border-radius: 8px; overflow: hidden;">
+                <div style="background: var(--background-medium); padding: 1rem; border-bottom: 1px solid rgba(0, 255, 157, 0.2); display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="color: var(--primary-color); margin: 0;">${site.title}</h3>
+                        <p style="color: var(--text-secondary); margin: 0.25rem 0 0 0; font-size: 0.85rem;">By ${site.author} | ${site.views} views</p>
+                    </div>
+                    <button onclick="webTrap.navigateTo('aceos://directory')" style="background: var(--background-light); border: 1px solid rgba(0, 255, 157, 0.2); color: white; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                        ← Back to Directory
+                    </button>
+                </div>
+                <div style="background: white; padding: 0;">
+                    ${site.html}
+                </div>
             </div>
         `;
     },
@@ -165,14 +208,61 @@ const webTrap = {
 
     // Directory page
     getDirectoryPage() {
+        // Load published sites from makeTrap
+        const publishedSites = AceStorage.load('makeTrap_published') || [];
+        
+        let sitesHTML = '';
+        if (publishedSites.length === 0) {
+            sitesHTML = `
+                <div style="background: var(--background-light); padding: 2rem; border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.2); text-align: center;">
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">No sites are currently available in the directory.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Use Make+Trap to create and publish your own site!</p>
+                </div>
+            `;
+        } else {
+            sitesHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    ${publishedSites.map(site => `
+                        <div style="background: var(--background-light); border: 1px solid rgba(0, 255, 157, 0.2); border-radius: 8px; overflow: hidden; transition: all 0.3s; cursor: pointer;" onclick="webTrap.navigateTo('${site.url}')">
+                            <div style="padding: 1.5rem;">
+                                <h3 style="color: var(--primary-color); margin: 0 0 0.5rem 0; font-size: 1.1rem;">${site.title}</h3>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                    <span style="color: var(--text-secondary); font-size: 0.85rem;">👤 ${site.author}</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.85rem;">👁️ ${site.views} views</span>
+                                </div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">
+                                    Published: ${new Date(site.publishedAt).toLocaleDateString()}
+                                </div>
+                            </div>
+                            <div style="background: var(--background-medium); padding: 0.75rem 1.5rem; border-top: 1px solid rgba(0, 255, 157, 0.1);">
+                                <div style="color: var(--secondary-color); font-size: 0.85rem;">🌐 ${site.url}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
         return `
-            <div style="max-width: 1000px; margin: 0 auto;">
-                <h1 style="color: var(--primary-color); margin-bottom: 2rem;">Server Directory</h1>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Browse servers and sites hosted within the aceOS network.</p>
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div>
+                        <h1 style="color: var(--primary-color); margin: 0 0 0.5rem 0;">Site Directory</h1>
+                        <p style="color: var(--text-secondary); margin: 0;">Browse sites created and published by aceOS users worldwide</p>
+                    </div>
+                    <div style="color: var(--primary-color); font-size: 1.5rem; font-weight: bold;">
+                        ${publishedSites.length} Live Sites
+                    </div>
+                </div>
                 
-                <div style="background: var(--background-light); padding: 1rem; border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.2); margin-bottom: 1rem;">
-                    <p style="color: var(--text-secondary); text-align: center;">No servers are currently available in the directory.</p>
-                    <p style="color: var(--text-secondary); text-align: center; margin-top: 0.5rem; font-size: 0.9rem;">Use makeTrap to create and host your own secure site!</p>
+                ${sitesHTML}
+                
+                <div style="margin-top: 3rem; padding: 2rem; background: var(--background-light); border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.2); text-align: center;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Want to publish your own site?</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Use Make+Trap website builder to create amazing sites with drag-and-drop modules!</p>
+                    <button onclick="Desktop.launchApp('makeTrap')" style="background: linear-gradient(135deg, #00ff9d, #00cc7d); color: #0a0a0f; border: none; padding: 0.75rem 2rem; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 1rem;">
+                        ✏️ Open Make+Trap
+                    </button>
                 </div>
             </div>
         `;
