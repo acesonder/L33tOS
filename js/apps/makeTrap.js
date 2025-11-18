@@ -310,7 +310,8 @@ const makeTrap = {
 
     // Update canvas display
     updateCanvasDisplay(window) {
-        const dropzone = window.element.querySelector('#canvas-dropzone');
+        const dropzone = window ? window.element.querySelector('#canvas-dropzone') : document.querySelector('#canvas-dropzone');
+        if (!dropzone) return;
         const emptyState = dropzone.querySelector('.canvas-empty');
 
         if (this.currentSite.modules.length === 0) {
@@ -369,7 +370,7 @@ const makeTrap = {
             image: `<img src="${p.src}" alt="${p.alt}" style="width: ${p.width}; height: auto; border-radius: 8px;">`,
             'contact-form': `<div style="background: #f5f5f5; padding: 2rem; border-radius: 8px;">
                 <h3>${p.title}</h3>
-                ${p.fields.map(field => `<div style="margin-bottom: 1rem;"><label>${field}:</label><input type="text" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></div>`).join('')}
+                ${(p.fields && Array.isArray(p.fields) ? p.fields : ['Name', 'Email', 'Message']).map(field => `<div style="margin-bottom: 1rem;"><label>${field}:</label><input type="text" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></div>`).join('')}
                 <button style="background: #00ff9d; color: #000; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer;">${p.buttonText}</button>
             </div>`,
             'product-card': `<div style="border: 1px solid #ddd; border-radius: 8px; padding: 1rem; background: white;">
@@ -386,8 +387,8 @@ const makeTrap = {
             </article>`,
             'review-module': `<div style="background: #f5f5f5; padding: 1.5rem; border-radius: 8px;">
                 <h3>Customer Reviews</h3>
-                <div style="color: #ffd700; font-size: 1.5rem;">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</div>
-                <p style="color: #666; margin-top: 0.5rem;">Based on ${p.reviews.length} reviews</p>
+                <div style="color: #ffd700; font-size: 1.5rem;">${'★'.repeat(p.rating || 5)}${'☆'.repeat(5-(p.rating || 5))}</div>
+                <p style="color: #666; margin-top: 0.5rem;">Based on ${(p.reviews && Array.isArray(p.reviews) ? p.reviews.length : 0)} reviews</p>
             </div>`,
             'chat-widget': `<div style="background: #00ff9d; color: #000; padding: 1rem; border-radius: 8px; text-align: center;">
                 <h4>${p.title}</h4>
@@ -453,7 +454,7 @@ const makeTrap = {
                 const module = this.currentSite.modules.find(m => m.id === moduleId);
                 if (module) {
                     module.properties[propKey] = e.target.value;
-                    this.updateCanvasDisplay(document.querySelector('.maketrap-builder').closest('.window'));
+                    this.updateCanvasDisplay(null);
                 }
             });
         });
@@ -468,8 +469,7 @@ const makeTrap = {
     deleteModule(moduleId) {
         if (confirm('Delete this module?')) {
             this.currentSite.modules = this.currentSite.modules.filter(m => m.id !== moduleId);
-            const window = document.querySelector('.maketrap-builder').closest('.window');
-            this.updateCanvasDisplay(window);
+            this.updateCanvasDisplay(null);
             Desktop.showNotification('Module Deleted', 'Module removed from canvas');
         }
     },
