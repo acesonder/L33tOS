@@ -25,12 +25,13 @@ aceOS is an innovative virtual operating system designed for ultimate privacy an
 - Anonymous browsing capabilities
 - Custom theming support
 
-#### ✏️ makeTrap WYSIWYG Editor
-- Create encrypted web pages and sites
-- Real-time preview
-- Export as standard HTML/CSS/JS
-- Built-in templates
-- Code editing with syntax highlighting
+#### ✏️ Make+Trap Website Builder
+- Drag-and-drop website builder with 30+ pre-built modules
+- Visual design with no coding required
+- Pre-built modules: layouts, forms, e-commerce, blogs, reviews, chat, and more
+- Live preview and instant publishing
+- GO LIVE button to publish sites to the aceOS network
+- Published sites appear in webTrap browser directory for all users worldwide
 
 #### 💬 chatTrap (Coming Soon)
 - Secure, encrypted messaging
@@ -153,7 +154,8 @@ aceOS/
 ### Phase 1 (Complete) ✅
 - Core OS shell and UI framework
 - webTrap browser with basic functionality
-- makeTrap WYSIWYG editor
+- Make+Trap drag-and-drop website builder with 30+ modules
+- Site publishing and directory system
 - Settings and Help system
 - Theme system
 - Window management
@@ -162,7 +164,7 @@ aceOS/
 - Complete chatTrap messaging app
 - Complete mailTrap email client
 - Enhanced webTrap features (tabs, extensions)
-- Server directory implementation
+- Additional Make+Trap modules and templates
 
 ### Phase 3 (Planned)
 - bankTrap financial tools
