@@ -68,13 +68,26 @@ aceOS is an innovative virtual operating system designed for ultimate privacy an
 ### Quick Start
 1. Open `index.html` in any modern web browser
 2. Wait for the boot sequence to complete
-3. Start using aceOS!
+3. **First-time users**: Complete the interactive Welcome Tour (7 easy steps)
+4. Start using aceOS!
+
+### Welcome Tour (First Launch)
+When you launch aceOS for the first time, an interactive tour will guide you through:
+- **Profile Setup**: Choose your name and avatar
+- **Security Configuration**: Set up password, PIN, or biometric protection
+- **Auto-Reset Timer**: Configure automatic session reset (1h, 6h, 12h, 24h, or never)
+- **Encryption Level**: Choose standard, enhanced, or maximum encryption
+- **Theme Selection**: Pick from 50 beautiful themes
+- **Backup & Restore**: Learn about data protection options
+
+**Note**: You can skip the tour and use default settings, or access help documentation anytime.
 
 ### Usage
 - **Launch Apps**: Click the start button or use desktop icons
 - **Create Windows**: Double-click desktop icons or use the start menu
 - **Navigate**: Use the taskbar for quick access to running apps
 - **Customize**: Open Settings to change themes and configure privacy options
+- **Get Help**: Access comprehensive documentation through Help & Tutorials app
 
 ## 🔐 Security & Privacy
 
@@ -187,6 +200,13 @@ MIT License - See LICENSE file for details
 
 Contributions are welcome! Please feel free to submit issues and pull requests.
 
+## 📚 Documentation
+
+- **[STARTUP_GUIDE.md](STARTUP_GUIDE.md)** - Comprehensive startup guide with step-by-step instructions for the welcome tour, configuration options, and best practices
+- **[featuresguide.md](featuresguide.md)** - Complete feature documentation covering all 13 apps and 50 themes
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributors
+- **Built-in Help App** - Access documentation directly within aceOS
+
 ## ⚠️ Disclaimer
 
 aceOS is designed for privacy and security education. Users are responsible for their own actions and data. The developers assume no liability for misuse of this software.
@@ -196,7 +216,8 @@ aceOS is designed for privacy and security education. Users are responsible for 
 For issues and questions:
 - Open an issue on GitHub
 - Check the built-in Help & Tutorials app
-- Review the documentation
+- Review the [STARTUP_GUIDE.md](STARTUP_GUIDE.md) documentation
+- Read the [featuresguide.md](featuresguide.md) for detailed features
 
 ---
 

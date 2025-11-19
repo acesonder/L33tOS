@@ -45,14 +45,34 @@
             bootScreen.classList.remove('active');
             desktop.classList.add('active');
 
-            // Show welcome notification
-            setTimeout(() => {
-                Desktop.showNotification(
-                    'Welcome to aceOS',
-                    'Anonymous. Secure. Untraceable.',
-                    5000
-                );
-            }, 500);
+            // Check if this is first launch and show welcome tour
+            if (WelcomeTour.isFirstLaunch()) {
+                setTimeout(() => {
+                    WelcomeTour.launch();
+                }, 500);
+            } else {
+                // Show welcome notification
+                setTimeout(() => {
+                    Desktop.showNotification(
+                        'Welcome to aceOS',
+                        'Anonymous. Secure. Untraceable.',
+                        5000
+                    );
+                }, 500);
+                
+                // Check auto-reset timer
+                AceSystem.checkAutoReset();
+            }
+            
+            // Update activity timestamp
+            AceSystem.updateActivity();
+            
+            // Set up activity tracking
+            ['click', 'keydown', 'mousemove'].forEach(event => {
+                document.addEventListener(event, () => {
+                    AceSystem.updateActivity();
+                }, { once: false, passive: true });
+            });
 
         } catch (error) {
             console.error('Boot failed:', error);
