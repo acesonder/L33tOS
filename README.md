@@ -63,7 +63,128 @@ aceOS is an innovative virtual operating system designed for ultimate privacy an
 - Getting started guides
 - Feature tutorials
 
-## 🎮 Getting Started
+## 🧪 PHP Feature Management System (NEW)
+
+### ⚠️ CRITICAL SECURITY WARNING
+
+This branch includes a **PHP-based feature management system** with ~200 feature stubs for development and testing purposes.
+
+**⚠️  INSECURE DEFAULT CREDENTIALS:**
+- The system uses **root** with a **blank password** for MySQL by default
+- These defaults are **ONLY for local development**
+- **NEVER use these settings in production**
+
+### Production Security Checklist
+
+Before deploying to production:
+
+1. **Create a `.env` file** based on `.env.example`
+2. **Set a strong database password** (`DB_PASS=your_secure_password`)
+3. **Create a dedicated database user** (not root):
+   ```sql
+   CREATE USER 'l33tos_user'@'localhost' IDENTIFIED BY 'strong_password';
+   GRANT SELECT, INSERT, UPDATE, DELETE ON l33tos.* TO 'l33tos_user'@'localhost';
+   FLUSH PRIVILEGES;
+   ```
+4. **Update `.env`** with the new credentials
+5. **Verify `.env` is in `.gitignore`** (never commit credentials)
+6. **Run the database schema**: `mysql -u root -p l33tos < db/init_schema.sql`
+
+### Quick Start - PHP Feature System
+
+#### Prerequisites
+- PHP 7.4+ with MySQLi extension
+- MySQL 5.7+ or MariaDB 10.2+
+- Web server (Apache/Nginx) or PHP built-in server
+
+#### Setup Steps
+
+1. **Configure Database** (optional - works without DB):
+   ```bash
+   # Create database
+   mysql -u root -p -e "CREATE DATABASE l33tos CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+   
+   # Import schema
+   mysql -u root -p l33tos < db/init_schema.sql
+   ```
+
+2. **Generate Feature Stubs**:
+   ```bash
+   # Via CLI
+   php tools/generate_feature_stubs.php
+   
+   # Or via browser
+   # Navigate to: http://localhost:8000/tools/generate_feature_stubs.php
+   ```
+
+3. **Start PHP Development Server**:
+   ```bash
+   php -S localhost:8000
+   ```
+
+4. **Access the Application**:
+   - Dashboard: http://localhost:8000/index.php
+   - Feature Generator: http://localhost:8000/tools/generate_feature_stubs.php
+   - Feature Registry: http://localhost:8000/admin/features_registry.php
+   - Sample Feature: http://localhost:8000/features/feature_0001.php
+
+#### Feature Categories (200 Features Total)
+
+The system includes 8 categories with 25 features each:
+
+1. **Core System** (Features 1-25) - System infrastructure
+2. **webTrap Browser** (Features 26-50) - Browser functionality
+3. **Marketplace Hosting** (Features 51-75) - Hosting platform
+4. **Make+Trap Website Builder** (Features 76-100) - Website builder
+5. **chatTrap** (Features 101-125) - Messaging system
+6. **mailTrap** (Features 126-150) - Email client
+7. **BankTrap** (Features 151-175) - Financial tools
+8. **crapTrap** (Features 176-200) - System utilities
+
+#### Testing the System
+
+1. **Generate all 200 features**:
+   ```bash
+   php tools/generate_feature_stubs.php
+   ```
+
+2. **View the feature registry**:
+   - Open http://localhost:8000/admin/features_registry.php
+   - Toggle features on/off
+   - View individual feature pages
+
+3. **Verify toggles**:
+   - Check `data/feature_toggles.json` to see saved states
+   - Toggle a feature and verify the JSON updates
+
+#### File Structure
+
+```
+L33tOS/
+├── config.php                    # Database configuration
+├── .env.example                  # Example environment config
+├── index.php                     # Main dashboard
+├── includes/
+│   ├── header.php               # Layout header
+│   └── footer.php               # Layout footer
+├── features/
+│   ├── feature_0001.php         # Sample feature (200 total when generated)
+│   └── ...
+├── admin/
+│   ├── features_registry.php    # Feature management UI
+│   └── toggle_feature.php       # AJAX toggle endpoint
+├── tools/
+│   └── generate_feature_stubs.php  # Feature generator
+├── data/
+│   └── feature_toggles.json     # Feature state storage
+├── assets/
+│   ├── css/custom.css           # 3D styles and animations
+│   └── js/app.js                # JavaScript utilities
+└── db/
+    └── init_schema.sql          # Database schema
+```
+
+## 🎮 Getting Started - Browser-Based OS
 
 ### Quick Start
 1. Open `index.html` in any modern web browser

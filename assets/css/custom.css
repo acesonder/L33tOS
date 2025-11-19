@@ -1,0 +1,292 @@
+//START - ASSETS/CSS/CUSTOM.CSS
+/**
+ * L33tOS Custom Styles
+ * 3D effects, transitions, and modern UI elements
+ */
+
+/* === Global Styles === */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* === 3D Card Effects === */
+.card-3d {
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.2),
+        0 6px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: none;
+}
+
+.card-3d:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.3),
+        0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* === 3D Navigation Bar === */
+.navbar.shadow-3d {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* === 3D Buttons === */
+.btn-3d {
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.15),
+        0 3px 3px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-3d:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 15px rgba(0, 0, 0, 0.25),
+        0 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.btn-3d:active {
+    transform: translateY(1px);
+    box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* === Gradient Backgrounds === */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+}
+
+.bg-gradient-dark {
+    background: linear-gradient(135deg, #232526 0%, #414345 100%);
+}
+
+/* === Feature Categories === */
+.feature-category {
+    text-align: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.feature-category:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feature-category i {
+    display: block;
+}
+
+.feature-category h6 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+}
+
+/* === Feature Cards === */
+.feature-card {
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+}
+
+.feature-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+}
+
+/* === Toggle Success Flash === */
+.success-flash {
+    animation: flashGreen 0.5s ease;
+}
+
+@keyframes flashGreen {
+    0%, 100% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(40, 167, 69, 0.2);
+    }
+}
+
+/* === Modal Enhancements === */
+.modal-content {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 1rem;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+/* === Footer === */
+footer {
+    margin-top: auto;
+}
+
+/* === Animations === */
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-in {
+    animation: slideInUp 0.5s ease-out;
+}
+
+/* === Loading Spinner === */
+.spinner-3d {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(102, 126, 234, 0.3);
+    border-radius: 50%;
+    border-top-color: #667eea;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* === Form Enhancements === */
+.form-control:focus,
+.form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+/* === Alert Enhancements === */
+.alert {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* === Badge Enhancements === */
+.badge {
+    padding: 0.5em 1em;
+    font-weight: 600;
+}
+
+/* === List Group Enhancements === */
+.list-group-item {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.list-group-item-action:hover {
+    background-color: #667eea;
+    color: white;
+}
+
+/* === Code Blocks === */
+code {
+    background-color: #f8f9fa;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    color: #e83e8c;
+}
+
+/* === Stat Items === */
+.stat-item {
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+/* === Log Lines === */
+.log-line {
+    font-family: 'Courier New', monospace;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .display-5 {
+        font-size: 1.5rem;
+    }
+    
+    .feature-category {
+        margin-bottom: 1rem;
+    }
+}
+
+/* === Scrollbar Styling === */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+}
+//END - ASSETS/CSS/CUSTOM.CSS
