@@ -92,24 +92,26 @@ const marketBrowser = {
     loadMarketplace(window) {
         const grid = window.element.querySelector('#items-grid');
         
-        // Sample marketplace items
-        const sampleItems = [
-            { id: 1, icon: '📦', title: 'Starter Template Pack', price: 29.99, category: 'templates', rating: 4.8, sales: 156 },
-            { id: 2, icon: '⚡', title: 'Performance Optimization Service', price: 49.99, category: 'services', rating: 4.9, sales: 89 },
-            { id: 3, icon: '🎨', title: 'UI Component Library', price: 39.99, category: 'digital', rating: 4.7, sales: 234 },
-            { id: 4, icon: '🔧', title: 'Development Tools Bundle', price: 59.99, category: 'tools', rating: 4.6, sales: 123 },
-            { id: 5, icon: '📝', title: 'Documentation Templates', price: 19.99, category: 'templates', rating: 4.8, sales: 178 },
-            { id: 6, icon: '💎', title: 'Premium Icon Set', price: 24.99, category: 'art', rating: 4.9, sales: 267 },
-            { id: 7, icon: '🚀', title: 'Launch Checklist Pro', price: 14.99, category: 'digital', rating: 4.5, sales: 345 },
-            { id: 8, icon: '🎯', title: 'Marketing Analytics Tool', price: 79.99, category: 'tools', rating: 4.7, sales: 98 },
-        ];
+        // Load ONLY items from THIS OS device (marketPlace listings)
+        const marketplaceListings = AceStorage.load('marketPlace_listings') || [];
+        
+        // Filter to show only items hosted on this device
+        const hostedItems = marketplaceListings.filter(item => item.hostedOnThisDevice !== false);
 
-        // Load from marketPlace if available
-        if (window.marketPlace && window.marketPlace.listings) {
-            sampleItems.push(...marketPlace.listings);
+        if (hostedItems.length === 0) {
+            grid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                    <h3 style="color: var(--text-secondary);">No items available</h3>
+                    <p style="color: var(--text-secondary);">Items hosted on this OS will appear here.</p>
+                    <button onclick="Desktop.launchApp('marketPlace')" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border: none; color: var(--background-dark); padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 1rem;">
+                        Create Your First Listing
+                    </button>
+                </div>
+            `;
+            return;
         }
 
-        this.displayItems(sampleItems, grid);
+        this.displayItems(hostedItems, grid);
     },
 
     // Display items in grid
@@ -119,14 +121,22 @@ const marketBrowser = {
         items.forEach(item => {
             const card = document.createElement('div');
             card.className = 'item-card';
+            
+            // Use photo if available, otherwise use icon
+            const imageDisplay = item.photo 
+                ? `<img src="${item.photo}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem;" />`
+                : `<div class="item-icon">${item.icon}</div>`;
+            
+            const reviewCount = (item.reviews || []).length;
+            
             card.innerHTML = `
-                <div class="item-icon">${item.icon}</div>
+                ${imageDisplay}
                 <div class="item-title">${item.title}</div>
                 <div class="item-price">$${item.price.toFixed(2)}</div>
                 <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
-                    ⭐ ${item.rating ? item.rating.toFixed(1) : '4.5'} • 💰 ${item.sales || 0} sales
+                    ⭐ ${item.rating ? item.rating.toFixed(1) : '0.0'} (${reviewCount} reviews) • 💰 ${item.sales || 0} sales
                 </div>
-                <button class="search-btn" style="width: 100%; margin-top: 1rem;" onclick="marketBrowser.viewItem(${item.id})">View Details</button>
+                <button class="search-btn" style="width: 100%; margin-top: 1rem;" onclick="marketBrowser.viewItem('${item.id}')">View Details</button>
             `;
             grid.appendChild(card);
         });
@@ -146,7 +156,12 @@ const marketBrowser = {
 
     // View item details
     viewItem(itemId) {
-        Desktop.showNotification('MarketBrowser', 'Item details - Coming soon!');
+        // Open MarketPlace app's listing details
+        if (window.marketPlace) {
+            marketPlace.viewListingDetails(itemId);
+        } else {
+            Desktop.showNotification('MarketBrowser', 'Unable to load listing details');
+        }
     }
 };
 
