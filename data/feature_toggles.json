@@ -1,0 +1,6 @@
+//START - DATA/FEATURE_TOGGLES.JSON
+{
+  "feature_0001": false,
+  "_comment": "Feature toggles are stored here. Set to true to enable, false to disable."
+}
+//END - DATA/FEATURE_TOGGLES.JSON
