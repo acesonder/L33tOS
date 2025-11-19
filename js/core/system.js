@@ -12,7 +12,11 @@ const AceSystem = {
         profileName: 'Anonymous User',
         profileAvatar: '🔒',
         passwordLock: false,
-        passwordHash: null
+        passwordHash: null,
+        securityType: 'none', // 'none', 'password', 'pin', 'biometric'
+        autoResetTime: 'never', // 'never', '1', '6', '12', '24' (hours)
+        encryptionType: 'standard', // 'standard', 'enhanced', 'maximum'
+        lastActivityTime: null
     },
 
     // Initialize the system
@@ -37,6 +41,47 @@ const AceSystem = {
     // Save configuration
     saveConfig() {
         AceStorage.save('config', this.config);
+    },
+
+    // Update configuration
+    updateConfig(newConfig) {
+        this.config = { ...this.config, ...newConfig };
+        this.saveConfig();
+    },
+
+    // Get configuration
+    getConfig() {
+        return { ...this.config };
+    },
+
+    // Check auto-reset timer
+    checkAutoReset() {
+        if (this.config.autoResetTime === 'never') return;
+        
+        const now = Date.now();
+        const lastActivity = this.config.lastActivityTime || now;
+        const hours = parseInt(this.config.autoResetTime);
+        const resetTime = hours * 60 * 60 * 1000; // Convert hours to milliseconds
+        
+        if (now - lastActivity > resetTime) {
+            // Auto-reset triggered
+            console.log('Auto-reset triggered');
+            this.resetSystem();
+        }
+    },
+
+    // Update last activity time
+    updateActivity() {
+        this.config.lastActivityTime = Date.now();
+        this.saveConfig();
+    },
+
+    // Reset system
+    resetSystem() {
+        if (confirm('Auto-reset timer has expired. All session data will be cleared. Continue?')) {
+            AceStorage.clearAll();
+            location.reload();
+        }
     },
 
     // Apply theme

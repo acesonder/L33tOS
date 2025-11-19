@@ -19,7 +19,10 @@ const AceCrypto = {
                 text.charCodeAt(i) ^ key.charCodeAt(i % key.length)
             );
         }
-        return btoa(result); // Base64 encode
+        // Use encodeURIComponent to handle Unicode before btoa
+        return btoa(encodeURIComponent(result).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+            return String.fromCharCode('0x' + p1);
+        }));
     },
 
     // Simple decryption using XOR
@@ -27,7 +30,11 @@ const AceCrypto = {
         if (!encryptedText || !key) return encryptedText;
         
         try {
-            const text = atob(encryptedText); // Base64 decode
+            // Decode from base64 and handle Unicode
+            const text = decodeURIComponent(atob(encryptedText).split('').map(c => {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            
             let result = '';
             for (let i = 0; i < text.length; i++) {
                 result += String.fromCharCode(
