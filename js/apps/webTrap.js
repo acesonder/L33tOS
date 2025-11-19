@@ -72,6 +72,7 @@ const webTrap = {
         const forwardBtn = window.element.querySelector('#forward-btn');
         const refreshBtn = window.element.querySelector('#refresh-btn');
         const bookmarkBtn = window.element.querySelector('#bookmark-btn');
+        const newTabBtn = window.element.querySelector('#new-tab-btn');
 
         goBtn.addEventListener('click', () => {
             this.navigateTo(urlBar.value, window);
@@ -87,6 +88,7 @@ const webTrap = {
         forwardBtn.addEventListener('click', () => this.goForward(window));
         refreshBtn.addEventListener('click', () => this.refresh(window));
         bookmarkBtn.addEventListener('click', () => this.addBookmark(window));
+        newTabBtn.addEventListener('click', () => this.openNewTab());
 
         this.renderBookmarks(window);
     },
@@ -171,12 +173,40 @@ const webTrap = {
 
     // Welcome page
     getWelcomePage() {
+        // Get available marketplace data
+        const marketplaceListings = AceStorage.load('marketPlace_listings') || [];
+        const serverCount = marketplaceListings.filter(l => l.category === 'Services').length;
+        
         return `
-            <div style="max-width: 800px; margin: 0 auto;">
+            <div style="max-width: 1000px; margin: 0 auto;">
                 <h1 style="color: var(--primary-color); margin-bottom: 2rem; text-align: center;">Welcome to webTrap</h1>
-                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; text-align: center;">
                     webTrap is the secure browser for aceOS. All content accessed through webTrap is encrypted and exclusive to aceOS users.
                 </p>
+                
+                <h2 style="color: var(--secondary-color); margin: 2rem 0 1rem;">🌐 Available Servers</h2>
+                <div style="background: var(--background-light); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.2); margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="color: var(--primary-color); margin: 0;">Active aceOS Servers</h3>
+                        <span style="color: var(--secondary-color); font-size: 1.5rem; font-weight: bold;">${serverCount} Online</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Connect to servers hosted by aceOS users worldwide</p>
+                    <button onclick="webTrap.navigateTo('aceos://directory')" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border: none; color: var(--background-dark); padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                        Browse Server Directory
+                    </button>
+                </div>
+
+                <h2 style="color: var(--secondary-color); margin: 2rem 0 1rem;">🛒 Marketplace</h2>
+                <div style="background: var(--background-light); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.2); margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="color: var(--primary-color); margin: 0;">Marketplace Items</h3>
+                        <span style="color: var(--secondary-color); font-size: 1.5rem; font-weight: bold;">${marketplaceListings.length} Available</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Browse and discover items hosted on this OS</p>
+                    <button onclick="Desktop.launchApp('marketBrowser')" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border: none; color: var(--background-dark); padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                        Open Marketplace Browser
+                    </button>
+                </div>
                 
                 <h2 style="color: var(--secondary-color); margin: 2rem 0 1rem;">Quick Links</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
@@ -199,7 +229,7 @@ const webTrap = {
                     <li>🔒 End-to-end encryption</li>
                     <li>🛡️ Anonymous browsing</li>
                     <li>🎨 Customizable themes</li>
-                    <li>📑 Bookmark management</li>
+                    <li>📑 Bookmark management with drag-and-drop</li>
                     <li>🔌 Extension support (coming soon)</li>
                 </ul>
             </div>
@@ -349,6 +379,51 @@ const webTrap = {
         bookmarksBar.innerHTML = this.bookmarks.map(bookmark => 
             `<div class="bookmark" onclick="webTrap.navigateTo('${bookmark.url}')">${bookmark.title}</div>`
         ).join('');
+        
+        // Enable drag-and-drop on the bookmarks bar
+        this.setupBookmarksDragDrop(window);
+    },
+
+    // Setup drag-and-drop for bookmarks bar
+    setupBookmarksDragDrop(window) {
+        const bookmarksBar = window.element.querySelector('#bookmarks-bar');
+        const urlBar = window.element.querySelector('#url-bar');
+        
+        // Make bookmarks bar a drop zone
+        bookmarksBar.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            bookmarksBar.style.background = 'rgba(0, 255, 157, 0.1)';
+        });
+        
+        bookmarksBar.addEventListener('dragleave', (e) => {
+            bookmarksBar.style.background = '';
+        });
+        
+        bookmarksBar.addEventListener('drop', (e) => {
+            e.preventDefault();
+            bookmarksBar.style.background = '';
+            
+            const url = e.dataTransfer.getData('text/plain') || urlBar.value;
+            if (url && url.startsWith('aceos://')) {
+                if (!this.bookmarks.find(b => b.url === url)) {
+                    const title = prompt('Bookmark title:', url);
+                    if (title) {
+                        this.bookmarks.push({ title, url });
+                        this.saveBookmarks();
+                        this.renderBookmarks(window);
+                        Desktop.showNotification('Bookmark Added', `"${title}" has been bookmarked`);
+                    }
+                } else {
+                    Desktop.showNotification('Already Bookmarked', 'This page is already in your bookmarks');
+                }
+            }
+        });
+        
+        // Make URL bar draggable
+        urlBar.setAttribute('draggable', 'true');
+        urlBar.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', urlBar.value);
+        });
     },
 
     // Navigation methods
@@ -367,6 +442,11 @@ const webTrap = {
 
     refresh(window) {
         this.navigateTo(this.currentUrl, window);
+    },
+
+    // Open new tab
+    openNewTab() {
+        this.launch();
     }
 };
 
