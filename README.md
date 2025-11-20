@@ -120,10 +120,12 @@ This branch contains a complete PHP/HTML/CSS/JS scaffold with **200 feature stub
 ### Built-in Applications
 
 #### 🌐 webTrap Browser
-- Secure browser for aceOS-exclusive content
+- **Browse any website** - Navigate to regular WWW sites (http/https) in addition to aceOS content
+- Secure browser for aceOS-exclusive content (aceos:// protocol)
 - Bookmark management with encryption
 - Anonymous browsing capabilities
 - Custom theming support
+- Automatic protocol detection (auto-adds https:// to domain names)
 
 #### ✏️ Make+Trap Website Builder
 - Drag-and-drop website builder with 30+ pre-built modules
