@@ -7,6 +7,106 @@
 
 aceOS is an innovative virtual operating system designed for ultimate privacy and anonymity. It runs entirely in your browser, providing a secure environment with encrypted storage and anonymous networking capabilities.
 
+## 🆕 PHP Feature Scaffold (Branch: feature/stubs-200)
+
+This branch contains a complete PHP/HTML/CSS/JS scaffold with **200 feature stubs** ready for development.
+
+### ⚠️ CRITICAL SECURITY WARNING
+**This scaffold uses INSECURE database defaults:**
+- Default MySQL user: `root`
+- Default password: `blank` (empty)
+- **NEVER use these settings in production!**
+- Create a `.env` file with secure credentials before deploying
+- See `.env.example` for configuration template
+
+### 🛠️ PHP Scaffold Setup
+
+1. **Requirements:**
+   - PHP 7.4 or higher
+   - MySQL 5.7 or higher
+   - Web server (Apache/Nginx) or use PHP built-in server
+
+2. **Database Setup:**
+   ```bash
+   # Create database and import schema
+   mysql -u root -p < db/init_schema.sql
+   ```
+
+3. **Configuration:**
+   ```bash
+   # Copy .env.example to .env and update with your credentials
+   cp .env.example .env
+   # Edit .env with secure database credentials
+   ```
+
+4. **Run Development Server:**
+   ```bash
+   # Using PHP built-in server
+   php -S localhost:8000
+   # Then visit http://localhost:8000/index.php
+   ```
+
+5. **Generate Feature Stubs:**
+   ```bash
+   # From command line
+   php tools/generate_feature_stubs.php
+   # Or visit http://localhost:8000/tools/generate_feature_stubs.php
+   ```
+
+### 📁 Scaffold Structure
+```
+/
+├── index.php                    # Main dashboard
+├── config.php                   # Database configuration
+├── .env.example                 # Example environment file
+├── includes/
+│   ├── header.php              # Page header with navbar
+│   └── footer.php              # Page footer
+├── admin/
+│   └── features_registry.php   # Feature management & toggles
+├── features/                    # 200 feature stub files
+│   ├── feature_0001.php        # Core System features (1-25)
+│   ├── feature_0026.php        # webTrap features (26-75)
+│   ├── feature_0076.php        # Marketplace Hosting (76-125)
+│   ├── feature_0126.php        # Make+Trap Builder (126-150)
+│   ├── feature_0151.php        # chatTrap (151-165)
+│   ├── feature_0166.php        # mailTrap (166-180)
+│   ├── feature_0181.php        # bankTrap (181-190)
+│   └── feature_0191.php        # crapTrap (191-200)
+├── tools/
+│   └── generate_feature_stubs.php  # Feature generator script
+├── db/
+│   └── init_schema.sql         # Database schema with seeds
+├── data/
+│   └── feature_toggles.json    # Feature toggle state
+└── assets/
+    ├── css/
+    │   └── custom.css          # 3D styles & transitions
+    └── js/
+        └── app.js              # AJAX toggles & modals
+```
+
+### 🎨 Features
+- **Bootstrap 5** for responsive UI
+- **Font Awesome** icons
+- **3D-styled navbar** and cards with CSS transforms
+- **Smooth transitions** and animations
+- **AJAX feature toggles** with JSON persistence
+- **Modal demos** for each feature
+- **Category filtering** and search
+- **MySQL database** with 200 seeded features
+- **File-based fallback** when database unavailable
+
+### 📊 Feature Categories (200 Total)
+- **Core System**: 25 features
+- **webTrap**: 50 features
+- **Marketplace Hosting**: 50 features
+- **Make+Trap Website Builder**: 25 features
+- **chatTrap**: 15 features
+- **mailTrap**: 15 features
+- **bankTrap**: 10 features
+- **crapTrap**: 10 features
+
 ## 🚀 Features
 
 ### Core Capabilities
