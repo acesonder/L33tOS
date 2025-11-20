@@ -52,7 +52,7 @@ const webTrap = {
                 <button class="browser-btn" id="back-btn">←</button>
                 <button class="browser-btn" id="forward-btn">→</button>
                 <button class="browser-btn" id="refresh-btn">↻</button>
-                <input type="text" class="browser-url-bar" id="url-bar" placeholder="Enter aceOS URL (aceos://...)" value="aceos://welcome">
+                <input type="text" class="browser-url-bar" id="url-bar" placeholder="Enter URL (aceos://... or any website)" value="aceos://welcome">
                 <button class="browser-btn" id="go-btn">Go</button>
                 <button class="browser-btn" id="bookmark-btn">⭐ Bookmark</button>
             </div>
@@ -95,6 +95,14 @@ const webTrap = {
 
     // Navigate to URL
     navigateTo(url, window) {
+        // Auto-add protocol if missing for regular websites
+        if (!url.startsWith('aceos://') && !url.startsWith('http://') && !url.startsWith('https://')) {
+            // Check if it looks like a domain (contains a dot but no spaces)
+            if (url.includes('.') && !url.includes(' ')) {
+                url = 'https://' + url;
+            }
+        }
+
         this.currentUrl = url;
         this.history.push(url);
 
@@ -112,6 +120,11 @@ const webTrap = {
 
     // Get page content based on URL
     getPageContent(url) {
+        // Check if it's a regular WWW URL
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return this.getExternalWebContent(url);
+        }
+
         const pages = {
             'aceos://welcome': this.getWelcomePage(),
             'aceos://directory': this.getDirectoryPage(),
@@ -129,6 +142,28 @@ const webTrap = {
                 <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Page Not Found</h2>
                 <p style="color: var(--text-secondary);">The aceOS URL "${url}" does not exist.</p>
                 <p style="margin-top: 1rem;"><a href="#" onclick="webTrap.navigateTo('aceos://welcome'); return false;" style="color: var(--secondary-color);">Return to Welcome</a></p>
+            </div>
+        `;
+    },
+
+    // Get external web content (regular websites)
+    getExternalWebContent(url) {
+        return `
+            <div style="height: 100%; display: flex; flex-direction: column;">
+                <div style="background: var(--background-medium); padding: 0.75rem 1rem; border-bottom: 1px solid rgba(0, 255, 157, 0.2); display: flex; align-items: center; gap: 1rem;">
+                    <span style="color: var(--primary-color);">🌐</span>
+                    <span style="color: var(--text-secondary); font-size: 0.85rem;">Browsing external website</span>
+                    <span style="color: var(--secondary-color); font-family: monospace; font-size: 0.85rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${url}</span>
+                    <button onclick="webTrap.navigateTo('aceos://welcome')" style="background: var(--background-light); border: 1px solid rgba(0, 255, 157, 0.2); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+                        ← Back to aceOS
+                    </button>
+                </div>
+                <iframe 
+                    src="${url}" 
+                    style="flex: 1; width: 100%; height: 100%; border: none; background: white;"
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+                    loading="lazy"
+                ></iframe>
             </div>
         `;
     },
@@ -226,12 +261,25 @@ const webTrap = {
 
                 <h2 style="color: var(--secondary-color); margin: 2rem 0 1rem;">Features</h2>
                 <ul style="color: var(--text-secondary); line-height: 2;">
-                    <li>🔒 End-to-end encryption</li>
+                    <li>🌐 Browse regular WWW websites (http/https)</li>
+                    <li>🔒 End-to-end encryption for aceOS content</li>
                     <li>🛡️ Anonymous browsing</li>
                     <li>🎨 Customizable themes</li>
                     <li>📑 Bookmark management with drag-and-drop</li>
                     <li>🔌 Extension support (coming soon)</li>
                 </ul>
+                
+                <div style="background: var(--background-light); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(0, 255, 157, 0.2); margin-top: 1.5rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.75rem;">🌐 New: Browse Any Website!</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem;">
+                        webTrap now supports browsing regular internet websites! Just type any URL like:
+                    </p>
+                    <ul style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 0;">
+                        <li><code style="background: var(--background-dark); padding: 0.2rem 0.5rem; border-radius: 3px;">https://github.com</code></li>
+                        <li><code style="background: var(--background-dark); padding: 0.2rem 0.5rem; border-radius: 3px;">google.com</code> (https:// is added automatically)</li>
+                        <li><code style="background: var(--background-dark); padding: 0.2rem 0.5rem; border-radius: 3px;">aceos://directory</code> (for aceOS exclusive content)</li>
+                    </ul>
+                </div>
             </div>
         `;
     },
